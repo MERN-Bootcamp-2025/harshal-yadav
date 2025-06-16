@@ -1,10 +1,17 @@
-import logo from './logo.svg';
+import React from 'react';
+import ProfileCard from './components/ProfileCard';
+import users from './data/users';
 import './App.css';
-import ChildOne from './components/ChildOne';
+
 function App() {
   return (
     <div className="App">
-      <ChildOne/>
+      <h1>🌟 Team Profiles</h1>
+      <div className="profile-list">
+        {users.map((user, index) => (
+          <ProfileCard key={index} {...user} />
+        ))}
+      </div>
     </div>
   );
 }
