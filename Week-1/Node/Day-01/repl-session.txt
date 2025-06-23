@@ -1,0 +1,13 @@
+> 2 + 3
+5
+> const os = require('os')
+> os.platform()
+'linux'
+> global.console.log("Hi")
+Hi
+> typeof process
+'object'
+> const { add } = require('./utils')
+> add(5, 10)
+15
+> .exit
