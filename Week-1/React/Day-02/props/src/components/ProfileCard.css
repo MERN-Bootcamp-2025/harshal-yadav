@@ -1,0 +1,50 @@
+.profile-card {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 12px;
+  max-width: 400px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+
+.profile-bio,
+.profile-skills,
+.profile-contact {
+  margin-top: 1rem;
+}
+
+.profile-skills ul,
+.profile-contact .social-links {
+  list-style: none;
+  padding: 0;
+}
+
+.profile-skills li,
+.profile-contact li {
+  margin-bottom: 0.5rem;
+}
+
+.compact .profile-bio,
+.compact .profile-skills,
+.compact .profile-contact {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .profile-card {
+    max-width: 100%;
+  }
+}
