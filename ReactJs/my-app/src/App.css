@@ -1,0 +1,338 @@
+/* #root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+ */
+ 
+ /*
+ Login form
+ 
+ */
+
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  background-color: #f8f8f8;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  height: 100vh;
+  padding: 20px;
+}
+.user-list{
+   display: flex;
+  justify-content: center;
+  align-items: stretch;
+  height: 100vh;
+  padding: 20px;
+}
+.dashboard-preview {
+  flex: 1;
+  background: #f1f3f5;
+  padding: 40px;
+  border-radius: 10px 0 0 10px;
+}
+
+.dashboard-preview h1 {
+  color: #0d277a;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.dashboard-preview .tagline {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.dashboard-preview .subtext {
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+.dashboard-box {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.chart-placeholder {
+  margin-top: 10px;
+  padding: 20px;
+  background: #e9ecef;
+  border-radius: 8px;
+  text-align: center;
+  font-style: italic;
+}
+
+.signup-form {
+  flex: 1;
+  background: white;
+  padding: 40px;
+  border-radius: 0 10px 10px 0;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.05);
+}
+
+.signup-form h2 {
+  margin-bottom: 20px;
+}
+
+.signup-form input[type="text"],
+.signup-form input[type="email"],
+.signup-form input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.signup-form label {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.signup-form a {
+  color: #2ca85e;
+  text-decoration: none;
+  margin-left: 5px;
+}
+
+.signup-form .btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #2ca85e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.social-buttons {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.google, .facebook {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background-color: white;
+  cursor: pointer;
+} */
+
+
+/*----------------------------------todo---------------------------------------------------*/
+/* 
+ body {
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+}
+
+.app {
+  width: 400px;
+  margin: 40px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form {
+  display: flex;
+  gap: 10px;
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 8px;
+}
+
+button {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  justify-content: space-between;
+  transition: background 0.2s;
+}
+
+.todo-item span {
+  flex: 1;
+  margin-left: 10px;
+}
+
+.todo-item.completed span {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.todo-item:hover {
+  background-color: #f0f0f0;
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+} */
+
+
+
+
+/*Serach photo*/
+
+body {
+  font-family: sans-serif;
+  background-image: url('/pxfuel.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+  /* cursor: url('/pokeball.png'), auto; */
+}
+
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 800px;
+  width: 100%;
+  background-color: rgba(226, 230, 29, 0.6); /* red with transparency */
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 12px;
+}
+
+
+
+.search-form {
+  margin-bottom: 20px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  width: 60%;
+  font-size: 1rem;
+}
+
+button {
+  padding: 10px 20px;
+  margin-left: 10px;
+  font-size: 1rem;
+  background-color: rgb(36, 36, 226);
+  color: #f4f4f4;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.remove-btn {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  background: #ff5555;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+  line-height: 20px;
+}
+
+
+
+.photo-card {
+  background: rgb(224, 207, 51);
+  padding: 1px;
+  border: 1px solid #150ab9;
+  transition: transform 0.3s;
+  border-radius: 12px;
+   position: relative;
+}
+
+.photo-card:hover {
+  transform: scale(1.05);
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}
+
+.spinner {
+  font-style: italic;
+}
+
+/* .custom-cursor {
+  cursor: url('pokeball.png'), auto;
+} */
