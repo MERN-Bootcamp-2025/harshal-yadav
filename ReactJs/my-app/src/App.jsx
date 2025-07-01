@@ -183,127 +183,226 @@
 
 
 
+//......................POKEMON API...................................................
 
+// import { useState, useEffect } from 'react';
+// import './App.css';
+
+// import Login from './week-one-assigment/Login';
+// import Todo from './Day-05/Todo';
+// import DashboardPreview from './week-one-assigment/DashboardPreview';
+// import Effects from './Day-07/Effects';
+// import HomePage from './Day-07/assigment/HomePage';
+
+// import SearchForm from './Day-07/assigment/SearchForm';
+// import PhotoGrid from './Day-07/assigment/PhotoGrid';
+// import LoadingSpinner from './Day-07/assigment/LoadingSpinner';
+// import ErrorMessage from './Day-07/assigment/ErrorMessage';
+// import Accordion from './Day-10/Accordion';
+// import DropDown from './Day-11/DropDown';
+
+
+
+// function App() {
+//   const [photos, setPhotos] = useState([]);
+//   const [loading, setLoading] = useState(false);
+//   const [error, setError] = useState('');
+//   const [query, setQuery] = useState('');
+//   const [allPokemon, setAllPokemon] = useState([]);
+//   const [selection, setSelection]= useState(null);
+
+//   const handleSelect=(option)=>{
+//     setSelection(option);
+//   }
+
+//   const data = [
+//     { title: "Section 1", content: "How can i get my refund" },
+//     { title: "Section 2", content: "Payment Mode" },
+//     { title: "Section 3", content: "Installment" },
+//   ];
+
+//   // Fetch list of all Pokémon (once)
+//   useEffect(() => {
+//     const fetchList = async () => {
+//       try {
+//         const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1000');
+//         const data = await res.json();
+//         console.log("data1222",data);
+//         setAllPokemon(data.results); 
+//       } catch (err) {
+//         setError('Failed to load Pokémon list');
+//       }
+//     };
+//     fetchList();
+//   }, []);
+
+//   // Handle search input
+//   const handleSearch = async (searchTerm) => {
+//     setQuery(searchTerm);
+//     setLoading(true);
+//     setError('');
+//     setPhotos([]);
+//     try {
+//       const filtered = allPokemon
+//       .filter(p => p.name.toLowerCase().includes(searchTerm.toLowerCase()))
+//       .slice(0, 10); // Limit for performance
+      
+//     console.log("filtered",filtered)
+
+//       const promises = filtered.map(async (pokemon) => {
+//         const res = await fetch(pokemon.url);
+//         const data = await res.json();
+//         return {
+//           id: data.id,
+//           title: data.name,
+//           thumbnailUrl: data.sprites.front_default
+//         };  
+//       });
+
+//       const results = await Promise.all(promises);
+//       setPhotos(results);
+//     } catch (err) {
+//       setError('Failed to fetch Pokémon data.');
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   // Remove Pokémon from list
+//   const handleRemove = (id) => {
+//     setPhotos(prev => prev.filter(photo => photo.id !== id));
+//   };
+
+//   return (
+//     <div className="container">
+//       <h1>🔍 Pokémon Search</h1>
+
+//       {/* Search Form */}
+//       <SearchForm onSearch={handleSearch} />
+//        {/* <Accordion/> */}
+//       {/* Loading, Error, or Grid */}
+//       {loading && <LoadingSpinner />}
+//       {error && <ErrorMessage message={error} />}
+//       {!loading && !error && photos.length > 0 && (
+//         <PhotoGrid photos={photos} onRemove={handleRemove} />
+//       )}
+//  {/* <h1 className="text-sm bg-red-500">
+//     Hello world!
+//   </h1> */}
+
+//       {/* Optional Extra Components */}
+//       {/* <div className="extras"> */}
+//         {/* <DashboardPreview />
+//         <Login />
+//         <Effects />
+//         <HomePage />
+//         <Todo /> */}
+      
+//       {/* </div> */}
+      
+// // {/* <div>
+// //     <DropDown options={data}  onSelection={handleSelect} selection={selection}/>
+// // </div> */}
+//  </div> 
+
+//   );
+// }
+
+// export default App;
+
+
+//..................................LOGIN..........................................
 
 import { useState, useEffect } from 'react';
 import './App.css';
-
+import { Routes, Route } from "react-router";
 import Login from './week-one-assigment/Login';
-import Todo from './Day-05/Todo';
-import DashboardPreview from './week-one-assigment/DashboardPreview';
-import Effects from './Day-07/Effects';
-import HomePage from './Day-07/assigment/HomePage';
+import UserPage from './Day-13/assigment/pages/UserPage';
 
-import SearchForm from './Day-07/assigment/SearchForm';
-import PhotoGrid from './Day-07/assigment/PhotoGrid';
-import LoadingSpinner from './Day-07/assigment/LoadingSpinner';
-import ErrorMessage from './Day-07/assigment/ErrorMessage';
-import Accordion from './Day-10/Accordion';
-import DropDown from './Day-11/DropDown';
 
 
 
 function App() {
-  const [photos, setPhotos] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [query, setQuery] = useState('');
-  const [allPokemon, setAllPokemon] = useState([]);
-  const [selection, setSelection]= useState(null);
+  // const [photos, setPhotos] = useState([]);
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState('');
+  // const [query, setQuery] = useState('');
+  // const [allPokemon, setAllPokemon] = useState([]);
+  // const [selection, setSelection]= useState(null);
 
-  const handleSelect=(option)=>{
-    setSelection(option);
-  }
+  // const handleSelect=(option)=>{
+  //   setSelection(option);
+  // }
 
-  const data = [
-    { title: "Section 1", content: "How can i get my refund" },
-    { title: "Section 2", content: "Payment Mode" },
-    { title: "Section 3", content: "Installment" },
-  ];
+  // const data = [
+  //   { title: "Section 1", content: "How can i get my refund" },
+  //   { title: "Section 2", content: "Payment Mode" },
+  //   { title: "Section 3", content: "Installment" },
+  // ];
 
   // Fetch list of all Pokémon (once)
-  useEffect(() => {
-    const fetchList = async () => {
-      try {
-        const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1000');
-        const data = await res.json();
-        console.log("data1222",data);
-        setAllPokemon(data.results); 
-      } catch (err) {
-        setError('Failed to load Pokémon list');
-      }
-    };
-    fetchList();
-  }, []);
+  // useEffect(() => {
+  //   const fetchList = async () => {
+  //     try {
+  //       const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1000');
+  //       const data = await res.json();
+  //       console.log("data1222",data);
+  //       setAllPokemon(data.results); 
+  //     } catch (err) {
+  //       setError('Failed to load Pokémon list');
+  //     }
+  //   };
+  //   fetchList();
+  // }, []);
 
   // Handle search input
-  const handleSearch = async (searchTerm) => {
-    setQuery(searchTerm);
-    setLoading(true);
-    setError('');
-    setPhotos([]);
-    try {
-      const filtered = allPokemon
-      .filter(p => p.name.toLowerCase().includes(searchTerm.toLowerCase()))
-      .slice(0, 10); // Limit for performance
+  // const handleSearch = async (searchTerm) => {
+  //   setQuery(searchTerm);
+  //   setLoading(true);
+  //   setError('');
+  //   setPhotos([]);
+  //   try {
+  //     const filtered = allPokemon
+  //     .filter(p => p.name.toLowerCase().includes(searchTerm.toLowerCase()))
+  //     .slice(0, 10); // Limit for performance
       
-    console.log("filtered",filtered)
+  //   console.log("filtered",filtered)
 
-      const promises = filtered.map(async (pokemon) => {
-        const res = await fetch(pokemon.url);
-        const data = await res.json();
-        return {
-          id: data.id,
-          title: data.name,
-          thumbnailUrl: data.sprites.front_default
-        };  
-      });
+  //     const promises = filtered.map(async (pokemon) => {
+  //       const res = await fetch(pokemon.url);
+  //       const data = await res.json();
+  //       return {
+  //         id: data.id,
+  //         title: data.name,
+  //         thumbnailUrl: data.sprites.front_default
+  //       };  
+  //     });
 
-      const results = await Promise.all(promises);
-      setPhotos(results);
-    } catch (err) {
-      setError('Failed to fetch Pokémon data.');
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     const results = await Promise.all(promises);
+  //     setPhotos(results);
+  //   } catch (err) {
+  //     setError('Failed to fetch Pokémon data.');
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   // Remove Pokémon from list
-  const handleRemove = (id) => {
-    setPhotos(prev => prev.filter(photo => photo.id !== id));
-  };
+  // const handleRemove = (id) => {
+  //   setPhotos(prev => prev.filter(photo => photo.id !== id));
+  // };
+  
 
   return (
-    <div className="container">
-      <h1>🔍 Pokémon Search</h1>
-
-      {/* Search Form */}
-      <SearchForm onSearch={handleSearch} />
-       {/* <Accordion/> */}
-      {/* Loading, Error, or Grid */}
-      {loading && <LoadingSpinner />}
-      {error && <ErrorMessage message={error} />}
-      {!loading && !error && photos.length > 0 && (
-        <PhotoGrid photos={photos} onRemove={handleRemove} />
-      )}
- {/* <h1 className="text-sm bg-red-500">
-    Hello world!
-  </h1> */}
-
-      {/* Optional Extra Components */}
-      {/* <div className="extras"> */}
-        {/* <DashboardPreview />
-        <Login />
-        <Effects />
-        <HomePage />
-        <Todo /> */}
-      
+     <div>
+      <h1>Some Wizard with Steps</h1>
+      <Routes>
+        <Route index element={<Login />} />
+         <Route path="/dashboard" element={<UserPage />} />
+      </Routes>
       </div>
-//     //  </div> 
-// {/* <div>
-//     <DropDown options={data}  onSelection={handleSelect} selection={selection}/>
-// </div> */}
-  );
+    
+   );
 }
 
 export default App;

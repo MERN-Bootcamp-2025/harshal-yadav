@@ -1,8 +1,12 @@
 import React,{useState} from 'react'
+import { redirect } from 'react-router-dom';
 // import from './App.css'
 // import  from '../';
+import { useNavigate } from "react-router";
 
 const Login = () => {
+
+  let navigate = useNavigate();
     const [userData, setUserData]= useState({
     name:"",
     email:"",
@@ -26,9 +30,18 @@ const handleSubmit = (e) => {
   e.preventDefault();
   setFormData((prev) => [...prev, userData]);
   setUserData({ name: "", email: "", contact: "", address: "" });
+  navigate("/dashboard", {state:userData });
 };
 
   return (
+     <div className="">
+      
+ <h1 className="text-sm bg-red-500">
+    Hello world!
+  </h1>
+
+      Optional Extra Components
+      <div className="extras"></div>
     <div className='signup-form'>
       <h2>Create your account</h2>
       <form onSubmit={handleSubmit}>
@@ -66,6 +79,7 @@ const handleSubmit = (e) => {
             </div>
          ) )}
         </div>
+    </div>
     </div>
   )
 }
