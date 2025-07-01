@@ -246,7 +246,7 @@ button {
 
 body {
   font-family: sans-serif;
-  background-image: url('/pxfuel.jpg');
+  /* background-image: url('/pxfuel.jpg'); */
   background-repeat: no-repeat;
   background-size: cover;
   margin: 0;
