@@ -318,7 +318,7 @@ import './App.css';
 import { Routes, Route } from "react-router";
 import Login from './week-one-assigment/Login';
 import UserPage from './Day-13/assigment/pages/UserPage';
-
+import CounterPage from '../src/Week-04/Day-04/pages/CounterPage';
 
 
 
@@ -395,11 +395,13 @@ function App() {
 
   return (
      <div>
-      <h1>Some Wizard with Steps</h1>
+      <h1>Some Wizard</h1>
       <Routes>
         <Route index element={<Login />} />
          <Route path="/dashboard" element={<UserPage />} />
+          <Route path="/counter" element={<CounterPage initialCount={10}  />} />
       </Routes>
+     
       </div>
     
    );
