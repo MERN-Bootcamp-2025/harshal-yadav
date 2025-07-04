@@ -59,7 +59,7 @@ function CounterPage({ initialCount }) {
         onChange={handleInputChange}
       />
       <Button  label="add" type="button"  onClick={handleIncrement}/>
-       <Button  label="Substract" type="button"  onClick={handleDecrement}/>
+       <Button  label="Subtract" type="button"  onClick={handleDecrement}/>
     </div>
   );
 }
