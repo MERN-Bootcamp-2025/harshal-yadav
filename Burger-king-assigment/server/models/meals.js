@@ -33,7 +33,16 @@ const  Meals= sequelize.define('meals',{
   calories: {
     type: DataTypes.INTEGER,
     allowNull: true
+  },
+  products: {
+  type: DataTypes.TEXT,
+  get() {
+    return JSON.parse(this.getDataValue('products') || '[]');
+  },
+  set(val) {
+    this.setDataValue('products', JSON.stringify(val));
   }
+}
 });
 
 module.exports= Meals;
