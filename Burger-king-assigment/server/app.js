@@ -2,66 +2,39 @@ const path = require('path');
 
 const express = require('express');
 const bodyParser = require('body-parser');
+require('dotenv').config();
 
+const cors = require('cors');
 
 const sequelize = require('./util/database');
 const Product = require('./models/product');
 const Meals = require('./models/meals');
 const MealProduct = require('./models/meal-products');
 const Order = require('./models/order');
-
+const mealRoutes = require('./routes/meals');
 
 const app = express();
+app.use(cors({ origin: 'http://localhost:5173' }));
 const Port=3000;
-app.set('view engine', 'ejs');
-app.set('views', 'views');
 
-
-// const adminRoutes = require('./routes/admin');
-// const shopRoutes = require('./routes/shop');
+const shopRoutes = require('./routes/shop');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(shopRoutes); 
 
-app.use((req, res, next) => {
-  User.findById(1)
-    .then(user => {
-      req.user = user;
-      next();
-    })
-    .catch(err => console.log(err));
-});
 
-if (process.env.SEED_DB === 'true') {
-  require('./scripts/seedMeals')().then(() => {
-    console.log("Seeding done.");
-  });
-}
-
+app.use(mealRoutes);
 
 
 sequelize
-  // .sync({ force: true })
-  .sync()
-  .then(result => {
-    // return User.findById(1);
-    // console.log(result);
-  })
-  // .then(user => {
-  //   if (!user) {
-  //     return User.create({ name: 'Max', email: 'test@test.com' });
-  //   }
-  //   return user;
-  // })
-  // .then(user => {
-  //   // console.log(user);
-  //   return user.createCart();
-  // })
-  .then(cart => {
-    app.listen(Port,()=>{
-      console.log(`server is running on prot no ${Port}`)
+  .sync({ alter: true }) 
+  .then(() => {
+    app.listen(Port, () => {
+      console.log(`server is running on port ${Port}`);
     });
   })
   .catch(err => {
     console.log(err);
   });
+
