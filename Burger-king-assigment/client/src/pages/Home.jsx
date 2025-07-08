@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useCart } from '../context/CartContext';
 import Slider from 'react-slick';
+import NavBarComponent from '../components/NavBarComponent';
+import Footer from '../components/Footer';
+import Filters from '../components/Filters';
 
 
 const Home = () => {
@@ -13,12 +16,15 @@ const Home = () => {
  const [notification, setNotification] = useState('');
  const [meals, setMeals] = useState([]);
 const [viewMode, setViewMode] = useState('products'); // or 'meals'
+const [quantities, setQuantities] = useState({});
+const [cartCount, setCartCount] = useState(0); // cart item count
+
 
 const settings = {
   dots: true,
   infinite: true,
   speed: 500,
-  slidesToShow: 3,
+  slidesToShow: 1,
   slidesToScroll: 1,
   autoplay: true,
   autoplaySpeed: 3000,
@@ -71,6 +77,10 @@ const settings = {
 //   }
 // }, [viewMode]);
 
+const handleQuantityChange = (productId, value) => {
+  const qty = Math.max(1, Number(value)); // minimum 1
+  setQuantities(prev => ({ ...prev, [productId]: qty }));
+};
 
   const filtered = products.filter(p => {
     return (
@@ -91,63 +101,35 @@ const settings = {
     };
 
   return (
-    <div className="p-4">
-      <div className="flex gap-2 mb-4">
-        <input
-          type="text"
-          placeholder="Search..."
-          className="border p-2 rounded w-full"
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-        />
-        
-        {/* <button onClick={handleMeals} className="bg-gray-500 text-white px-3 py-1 rounded">Meals</button> */}
-      </div>
-  {notification && (
-    <div className="mb-4 p-3 bg-green-100 text-green-700 rounded shadow text-sm font-medium">
-      {notification}
-    </div>
-  )}
-    
-    
-<Slider {...settings}>
+    <>
+         <NavBarComponent setSearch={setSearch} search={search} cartCount={cartCount}/>
+             <div className="p-4">
+<div className='m-4 mt-10'>
+  <Slider {...settings}>
   {products.map((p) => (
-    <div key={p.id} className="px-2">
+    <div key={p.id} className="px-2 ">
       <div className="relative rounded overflow-hidden shadow">
         <img
           src={p.imageUrl}
           alt={p.p_name}
-          className="w-full h-80 object-cover"
+          className="w-full h-110 object-cover"
         />
-        <div className="absolute bottom-0 left-0 w-full bg-black/60 text-white p-4">
-          <h3 className="text-lg font-semibold">{p.p_name}</h3>
+        <div className="relative bottom-0 left-0 w-full bg-black/60 text-white p-9 top-90">
+          <h3 className="text-xl font-semibold">{p.p_name}</h3>
           <p className="text-sm">{p.description}</p>
-          <p className="font-bold mt-1">₹{p.price}</p>
-          <button
-            onClick={() => {
-              setCart((prev) => [...prev, p]);
-              setNotification(`${p.p_name} added to cart`);
-              setTimeout(() => setNotification(''), 2000);
-            }}
-            className="mt-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded"
-          >
-            Add to Cart
-          </button>
+          <p className="font-bold mt-1">${p.price}</p>
+     
         </div>
       </div>
     </div>
   ))}
 </Slider>
-<div className='absolute gap-5.5 mt-5'>
-    <div className=''>
-  <button onClick={() => setFilter('veg')} className="bg-green-900  text-white px-3 py-1 rounded "  >Veg</button>
-        <button onClick={() => setFilter('nonveg')} className="bg-red-500 text-white px-3 py-1 rounded">Non-Veg</button>
-        <button onClick={() => setFilter(null)} className="bg-gray-500 text-white px-3 py-1 rounded">All</button>
-    </div>
+<div className='relative gap-5.5 mt-24'>
+<Filters filter={filter} setFilter={setFilter} />
   
- <div className='flex mt-5'>
-            {filtered.map((p) => (
-    <div key={p.id} className="px-2">
+<div className='relative flex flex-wrap gap-4 mt-5 justify-center'>
+  {filtered.map((p) => (
+    <div key={p.id} className="px-2 w-64">
       <div className="relative rounded overflow-hidden shadow">
         <img
           src={p.imageUrl}
@@ -157,25 +139,37 @@ const settings = {
         <div className="absolute bottom-0 left-0 w-full bg-black/60 text-white p-4">
           <h3 className="text-lg font-semibold">{p.p_name}</h3>
           <p className="text-sm">{p.description}</p>
-          <p className="font-bold mt-1">₹{p.price}</p>
-          <button
-            onClick={() => {
-              setCart((prev) => [...prev, p]);
-              setNotification(`${p.p_name} added to cart`);
-              setTimeout(() => setNotification(''), 2000);
-            }}
-            className="mt-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded"
-          >
-            Add to Cart
-          </button>
+          <p className="font-bold mt-1">${p.price}</p>
+        <div className="mt-2">
+  <button
+    onClick={() => {
+      const qty = quantities[p.id] || 1;
+      const items = Array(qty).fill(p);
+      setCart(prev => [...prev, ...items]);
+      setCartCount(prev => prev + qty);
+      setNotification(`${p.p_name} added to cart (${qty})`);
+      setTimeout(() => setNotification(''), 2000);
+    }}
+    className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded w-full"
+  >
+    Add to Cart
+  </button>
+
+</div>
+
         </div>
       </div>
     </div>
   ))}
 </div>
+
+</div>
 </div>
 
     </div>
+    <Footer/>
+    </>
+
   );
 };
 

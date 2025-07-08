@@ -1,17 +1,23 @@
-
 import { useEffect, useState } from 'react';
 import { useCart } from '../context/CartContext';
 import axios from 'axios';
 
 const CartPage = () => {
-  const { cart } = useCart();
+  const { cart, setCart } = useCart();
   const [meals, setMeals] = useState([]);
   const [products, setProducts] = useState([]);
   const [bestOptions, setBestOptions] = useState([]);
 
-  const cartTotal = cart.reduce((sum, item) => sum + item.price, 0);
+  // Group items by product ID and quantity
+  const groupedCart = cart.reduce((acc, item) => {
+    acc[item.id] = acc[item.id] || { ...item, quantity: 0 };
+    acc[item.id].quantity += 1;
+    return acc;
+  }, {});
 
-  // Fetch meals
+  const cartItems = Object.values(groupedCart);
+  const cartTotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
   useEffect(() => {
     const fetchMeals = async () => {
       try {
@@ -24,7 +30,6 @@ const CartPage = () => {
     fetchMeals();
   }, []);
 
-  // Fetch products
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -37,14 +42,29 @@ const CartPage = () => {
     fetchProducts();
   }, []);
 
+  const updateQuantity = (product, delta) => {
+    setCart((prevCart) => {
+      const newCart = [...prevCart];
+      if (delta > 0) {
+        // Add more of the same item
+        newCart.push(product);
+      } else {
+        // Remove one item
+        const index = newCart.findIndex((p) => p.id === product.id);
+        if (index !== -1) {
+          newCart.splice(index, 1);
+        }
+      }
+      return newCart;
+    });
+  };
+
   const handleOptimize = () => {
- 
     const productPriceMap = products.reduce((acc, product) => {
       acc[product.id] = product.price;
       return acc;
     }, {});
 
-   
     const cartProductCount = {};
     cart.forEach(item => {
       cartProductCount[item.id] = (cartProductCount[item.id] || 0) + 1;
@@ -59,7 +79,6 @@ const CartPage = () => {
         mealProductCount[id] = (mealProductCount[id] || 0) + 1;
       });
 
-      
       const remaining = { ...cartProductCount };
       Object.entries(mealProductCount).forEach(([id, count]) => {
         if (remaining[id]) {
@@ -67,7 +86,6 @@ const CartPage = () => {
         }
       });
 
-     
       let extraCost = 0;
       Object.entries(remaining).forEach(([id, count]) => {
         extraCost += (productPriceMap[id] || 0) * count;
@@ -91,7 +109,6 @@ const CartPage = () => {
     if (bestCombo) {
       setBestOptions([bestCombo]);
     } else {
-      // No cheaper option found, fallback to original selection
       setBestOptions([
         {
           m_name: "Your Selected Items",
@@ -105,77 +122,88 @@ const CartPage = () => {
   };
 
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">🛒 Your Cart</h2>
+    <div className="p-4 max-w-3xl mx-auto">
+      <h2 className="text-2xl font-bold mb-6">🛒 Your Cart</h2>
 
-      {cart.length === 0 ? (
+      {cartItems.length === 0 ? (
         <p>No items in cart.</p>
       ) : (
         <>
-          <ul className="space-y-2">
-            {cart.map((item, i) => (
-              <li key={i} className="bg-white p-3 shadow rounded">
-                {item.p_name} - ₹{item.price.toFixed(2)}
-              </li>
+          <div className="space-y-4">
+            {cartItems.map((item) => (
+              <div key={item.id} className="flex items-center justify-between bg-white p-4 shadow rounded">
+                <div>
+                  <h4 className="font-semibold">{item.p_name}</h4>
+                  <p className="text-sm text-gray-600">${item.price.toFixed(2)} × {item.quantity} = ${(item.price * item.quantity).toFixed(2)}</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => updateQuantity(item, -1)}
+                    className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
+                  >−</button>
+                  <span className="w-6 text-center">{item.quantity}</span>
+                  <button
+                    onClick={() => updateQuantity(item, 1)}
+                    className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
+                  >+</button>
+                </div>
+              </div>
             ))}
-          </ul>
+          </div>
 
-          <h3 className="mt-4 text-xl font-semibold">Total: ₹{cartTotal.toFixed(2)}</h3>
+          <h3 className="mt-6 text-xl font-semibold">Total: ${cartTotal.toFixed(2)}</h3>
 
           <button
             onClick={handleOptimize}
-            className="mt-4 bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+            className="mt-6 bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
           >
             Optimize Bill
           </button>
 
-       {bestOptions.length > 0 && (
-  <div className="mt-6">
-    <h4 className="text-lg font-bold mb-2">🍱 Optimized Suggestion</h4>
-    <ul className="space-y-2">
-      {bestOptions.map((meal, i) => {
-        // Calculate extra cost separately for display
-        const extraCost = Object.entries(meal.extraItems || {}).reduce((sum, [id, qty]) => {
-          const product = products.find(p => p.id === parseInt(id));
-          return sum + (product?.price || 0) * qty;
-        }, 0);
+          {bestOptions.length > 0 && (
+            <div className="mt-8">
+              <h4 className="text-lg font-bold mb-2">🍱 Optimized Suggestion</h4>
+              <ul className="space-y-4">
+                {bestOptions.map((meal, i) => {
+                  const extraCost = Object.entries(meal.extraItems || {}).reduce((sum, [id, qty]) => {
+                    const product = products.find(p => p.id === parseInt(id));
+                    return sum + (product?.price || 0) * qty;
+                  }, 0);
 
-        return (
-          <li key={i} className="bg-yellow-100 p-3 rounded shadow">
-            <strong>{meal.m_name}</strong> <br />
-            <span className="text-sm text-gray-600">{meal.description}</span>
+                  return (
+                    <li key={i} className="bg-yellow-100 p-4 rounded shadow">
+                      <strong>{meal.m_name}</strong>
+                      <p className="text-sm text-gray-600">{meal.description}</p>
+                      <div className="mt-2 text-sm text-gray-800">
+                        Meal Price: ${(meal.price - extraCost).toFixed(2)} <br />
+                        Extra Items Cost: ${extraCost.toFixed(2)} <br />
+                        <strong>Total Cost: ${meal.price.toFixed(2)}</strong>
+                      </div>
 
-            <div className="mt-2 text-sm text-gray-800">
-              Meal Price: ₹{(meal.price - extraCost).toFixed(2)} <br />
-              Extra Items Cost: ₹{extraCost.toFixed(2)} <br />
-              <strong>Total Cost: ₹{meal.price.toFixed(2)}</strong>
+                      {meal.extraItems && Object.keys(meal.extraItems).length > 0 && (
+                        <div className="mt-2 text-sm text-gray-700">
+                          Additional Items Needed:
+                          <ul className="list-disc ml-4">
+                            {Object.entries(meal.extraItems).map(([id, qty], j) => {
+                              if (qty > 0) {
+                                const product = products.find(p => p.id === parseInt(id));
+                                return (
+                                  <li key={j}>
+                                    {product?.p_name} × {qty} (${(product.price * qty).toFixed(2)})
+                                  </li>
+                                );
+                              }
+                              return null;
+                            })}
+                          </ul>
+                        </div>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
-
-            {meal.extraItems && Object.keys(meal.extraItems).length > 0 && (
-              <div className="mt-2 text-sm text-gray-700">
-                Additional Items Needed:
-                <ul className="list-disc ml-4">
-                  {Object.entries(meal.extraItems).map(([id, qty], j) => {
-                    if (qty > 0) {
-                      const product = products.find(p => p.id === parseInt(id));
-                      return (
-                        <li key={j}>
-                          {product?.p_name} × {qty} (₹{(product.price * qty).toFixed(2)})
-                        </li>
-                      );
-                    }
-                    return null;
-                  })}
-                </ul>
-              </div>
-            )}
-          </li>
-        );
-      })}
-    </ul>
-  </div>
-)}
-
+          )}
         </>
       )}
     </div>
