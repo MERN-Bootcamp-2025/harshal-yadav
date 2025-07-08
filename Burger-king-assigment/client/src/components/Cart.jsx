@@ -4,9 +4,9 @@ const Cart = ({ cart }) => {
     <div>
       <h2>🛒 Cart</h2>
       {cart.map((item, i) => (
-        <div key={i}>{item.p_name} - ₹{item.price}</div>
+        <div key={i}>{item.p_name} - ${item.price}</div>
       ))}
-      <h3>Total: ₹{total.toFixed(2)}</h3>
+      <h3>Total: ${total.toFixed(2)}</h3>
     </div>
   );
 };

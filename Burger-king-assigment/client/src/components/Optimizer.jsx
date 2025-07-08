@@ -27,7 +27,7 @@ const Optimizer = ({ cart, meals }) => {
       {optimized && (
         <div>
           <h3>💰 Optimized Meal Suggestion</h3>
-          <p>{optimized.m_name} - ₹{optimized.price}</p>
+          <p>{optimized.m_name} - ${optimized.price}</p>
           <p>{optimized.description}</p>
         </div>
       )}
