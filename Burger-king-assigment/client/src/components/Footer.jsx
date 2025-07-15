@@ -32,7 +32,7 @@ const Footer = () => {
 
         <div>
           <h4 className="text-lg font-semibold mb-3">Contact</h4>
-          <p className="text-sm text-gray-400">Email: support@foodiehub.com</p>
+          <p className="text-sm text-gray-400">Email: support@FoodApp.com</p>
           <p className="text-sm text-gray-400">Phone: +91 98765 43210</p>
           <div className="flex space-x-4 mt-3">
             <a href="#" className="hover:text-white text-xl">🌐</a>
