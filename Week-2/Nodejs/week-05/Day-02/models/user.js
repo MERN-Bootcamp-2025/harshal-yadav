@@ -129,7 +129,7 @@ module.exports = mongoose.model('User', userSchema);
 //     return db.collection('users').insertOne(this);
 //   }
 
-//   addToCart(product) {
+//   (product) {
 //     const cartProductIndex = this.cart.items.findIndex(cp => {
 //       return cp.productId.toString() === product._id.toString();
 //     });

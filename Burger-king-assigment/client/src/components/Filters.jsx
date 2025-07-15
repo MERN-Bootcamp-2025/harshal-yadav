@@ -31,6 +31,16 @@ const Filters = ({ filter, setFilter }) => {
     }`}>
     All
   </button>
+     {/* <button
+        onClick={() => setFilter('meals')}
+        className={`pb-1 px-3 py-1 rounded text-white transition-all ${
+          filter === 'meals'
+            ? 'border-b-4 border-white bg-purple-600'
+            : 'bg-purple-600 hover:border-b-2 hover:border-white'
+        }`}
+      >
+        Meals
+      </button> */}
 </div>
 
   );

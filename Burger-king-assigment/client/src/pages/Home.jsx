@@ -63,19 +63,23 @@ const settings = {
     fetchProducts();
   }, []);
 
-//   useEffect(() => {
-//   if (viewMode === 'meals') {
-//     const fetchMeals = async () => {
-//       try {
-//         const res = await axios.get('http://localhost:3000/meals');
-//         setMeals(res.data.meals);
-//       } catch (err) {
-//         console.error('Error fetching meals:', err);
-//       }
-//     };
-//     fetchMeals();
-//   }
-// }, [viewMode]);
+useEffect(() => {
+  const fetchMeals = async () => {
+    try {
+      const res = await axios.get('http://localhost:3000/meals');
+      setMeals(res.data.meals);
+    } catch (err) {
+      console.error('Error fetching meals:', err);
+      setError('Failed to load meals');
+    }
+  };
+
+  if (filter === 'meals') {
+    fetchMeals();
+  }
+}, [filter]);
+
+
 
 const handleQuantityChange = (productId, value) => {
   const qty = Math.max(1, Number(value)); // minimum 1
@@ -128,7 +132,36 @@ const handleQuantityChange = (productId, value) => {
 <Filters filter={filter} setFilter={setFilter} />
   
 <div className='relative flex flex-wrap gap-4 mt-5 justify-center'>
-  {filtered.map((p) => (
+  { filter === 'meals' ? (
+  meals.map((meal) => (
+    <div key={meal.id} className="px-2 w-64">
+      <div className="relative rounded overflow-hidden shadow">
+        <img
+          src={meal.imageUrl}
+          alt={meal.m_name}
+          className="w-full h-80 object-cover"
+        />
+        <div className="absolute bottom-0 left-0 w-full bg-black/60 text-white p-4">
+          <h3 className="text-lg font-semibold">{meal.m_name}</h3>
+          <p className="text-sm">{meal.description}</p>
+          <p className="font-bold mt-1">${meal.price}</p>
+          <div className="mt-2">
+            <button
+              onClick={() => {
+                setCart(prev => [...prev, ...meal.products]);
+                setNotification(`${meal.m_name} added to cart`);
+                setTimeout(() => setNotification(''), 2000);
+              }}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded w-full"
+            >
+              Add Meal to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  ))
+) : (filtered.map((p) => (
     <div key={p.id} className="px-2 w-64">
       <div className="relative rounded overflow-hidden shadow">
         <img
@@ -160,7 +193,9 @@ const handleQuantityChange = (productId, value) => {
         </div>
       </div>
     </div>
-  ))}
+)  ))}
+
+  
 </div>
 
 </div>
