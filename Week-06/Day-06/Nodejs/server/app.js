@@ -22,10 +22,10 @@ const store = new MongoDBStore({
 
 const fileStorage= multer.diskStorage({
   destination: (req, file, cb)=>{
-    cd(null, 'images');
+    cb(null, 'images');
   },
   filename:(req, file,cb)=>{
-    cd(null, new Date.toIsoString()+'-'+file.originalname)
+    cb(null, new Date().toISOString()+'-'+file.originalname)
   }
 })
 
@@ -47,19 +47,26 @@ app.use(
 );
 
 app.use(flash());
-app.use(multer({storage:fileStorage}).single('image'));
+
 
 const fileFilter=(req, file, cb)=>{
   if(
     file.mimetype === 'image/png'||
     file.mimetype === 'image/jpg'||
     file.mimetype === 'image/jpeg'
+    // file.mimetype === 'image/csv'
   ){
-    cd(null, true);
+    cb(null, true);
   }else{
-    cd(null, false);
+    cb(null, false);
   }
 }
+app.use(multer({
+  storage:fileStorage,
+   limits: { fileSize: 5 * 1024 * 1024 },
+   fileFilter:fileFilter
+}).single('image'));
+
 
 app.use((req, res, next) => {
   if (!req.session.user) {
