@@ -1,0 +1,1 @@
+   // "test:e2e":"jest --testPathPattern=src/e2e",
